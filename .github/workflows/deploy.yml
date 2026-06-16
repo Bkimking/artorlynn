@@ -41,14 +41,14 @@ jobs:
       # 6. Deployment commands
       - name: Deploy codewithsky
         run: |
-          ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} bash << 'EOF'
             set -e
-
+                
             export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn -o StrictHostKeyChecking=no"
-
+                
             mkdir -p ~/artoflynn.codewithsky.co.ke
             cd ~/artoflynn.codewithsky.co.ke
-
+                
             if [ ! -d ".git" ]; then
                 git init
                 git remote add origin git@github.com:Bkimking/artorlynn.git
@@ -60,12 +60,10 @@ jobs:
             fi
                 
             composer install --no-dev --optimize-autoloader
-                
             php artisan migrate --force
-            php artisan db:seed --force
             php artisan optimize:clear
             php artisan optimize
                 
             echo "Deployment complete"
-            EOF
+          EOF
           

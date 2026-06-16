@@ -44,8 +44,8 @@ jobs:
             # Create target folder if missing
             mkdir -p ~/artoflynn.codewithsky.co.ke
             cd ~/artoflynn.codewithsky.co.ke
-            
 
+            #
             # Git setup
             if [ ! -d ".git" ]; then
                 GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git init

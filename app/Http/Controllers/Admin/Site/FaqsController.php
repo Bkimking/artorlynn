@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\FaqRequest;
-use App\Services\Admin\site\FaqsService;
+use App\Services\Admin\Site\FaqsService;
 use App\Helpers\ToastHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

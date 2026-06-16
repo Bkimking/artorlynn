@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\ServiceRequest;
 use App\Models\Service;
-use App\Services\Admin\site\ServicesService;
+use App\Services\Admin\Site\ServicesService;
 use App\Helpers\ToastHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

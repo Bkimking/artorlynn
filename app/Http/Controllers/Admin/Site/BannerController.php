@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\BannerRequest;
-use App\Services\Admin\site\BannerService;
+use App\Services\Admin\Site\BannerService;
 use App\Helpers\ToastHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

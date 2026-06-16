@@ -6,7 +6,7 @@ use App\Helpers\ToastHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\PartnerRequest;
 use App\Models\Partner;
-use App\Services\Admin\site\PartnerService;
+use App\Services\Admin\Site\PartnerService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

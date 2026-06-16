@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\FounderRequest;
-use App\Services\Admin\site\FounderService;
+use App\Services\Admin\Site\FounderService;
 use App\Helpers\ToastHelper;
 use Inertia\Inertia;
 

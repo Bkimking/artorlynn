@@ -19,19 +19,26 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    
+      # 3 Debug secrets
+      - name: Debug secrets presence
+        run: |
+          echo "HOST set: ${{ secrets.SSH_HOST != '' }}"
+          echo "PORT set: ${{ secrets.SSH_PORT != '' }}"
 
-      # 3. Add server fingerprint
+      # 4. Add server fingerprint
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.SSH_PORT || '22' }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
-      # # 4. Test SSH connection
+      # # 5. Test SSH connection
       # - name: SSH Test
       #   run: |
       #     ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} exit
 
-      # 5. Deployment commands
+      # 6. Deployment commands
       - name: Deploy codewithsky
         run: |
           ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'

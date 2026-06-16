@@ -41,29 +41,37 @@ jobs:
       # 6. Deployment commands
       - name: Deploy codewithsky
         run: |
-          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} bash << 'EOF'
+          ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
-                
-            export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn -o StrictHostKeyChecking=no"
-                
+
+            # Start agent & add GitHub deploy key
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_ed25519_artoflynn
+
+            # Create target folder if missing
             mkdir -p ~/artoflynn.codewithsky.co.ke
             cd ~/artoflynn.codewithsky.co.ke
-                
+
+            # Git setup
             if [ ! -d ".git" ]; then
-                git init
+                GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git init
                 git remote add origin git@github.com:Bkimking/artorlynn.git
-                git fetch origin
+                GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git fetch origin
                 git checkout -f main
             else
-                git fetch origin
+                GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git fetch origin
                 git reset --hard origin/main
             fi
-                
+
+            # Install dependencies
             composer install --no-dev --optimize-autoloader
+
+            # Laravel deployment
             php artisan migrate --force
+            php artisan db:seed --force
             php artisan optimize:clear
             php artisan optimize
-                
+
             echo "Deployment complete"
           EOF
           

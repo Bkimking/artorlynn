@@ -36,7 +36,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     // Notifications Center
     Route::prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->name('index');
-        Route::patch('/{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
+        Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
         Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])->name('read-all');
         Route::get('/settings', [NotificationController::class, 'settings'])->name('settings');
         Route::post('/settings', [NotificationController::class, 'updateSettings'])->name('settings.update');

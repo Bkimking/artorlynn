@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Site;
 use App\Helpers\ToastHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\HeroRequest;
-use App\Services\Admin\Site\HeroService;
+use App\Services\Admin\site\HeroService;
 use Inertia\Inertia;
 
 class HeroController extends Controller

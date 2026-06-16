@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\ContactRequest;
-use App\Services\Admin\Site\ContactService;
+use App\Services\Admin\site\ContactService;
 use App\Helpers\ToastHelper;
 use Inertia\Inertia;
 

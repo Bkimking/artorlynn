@@ -8,7 +8,7 @@ use App\Models\Testimonials;
 use App\Models\User;
 use App\Notifications\NotificationType;
 use App\Services\NotificationService;
-use App\Services\Admin\Site\TestimonialService;
+use App\Services\Admin\site\TestimonialService;
 use App\Helpers\ToastHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

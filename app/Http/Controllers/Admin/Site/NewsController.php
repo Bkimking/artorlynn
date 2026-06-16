@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Site\NewsRequest;
 use App\Models\News;
-use App\Services\Admin\Site\NewsService;
+use App\Services\Admin\site\NewsService;
 use App\Helpers\ToastHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

@@ -44,9 +44,7 @@ jobs:
           ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
 
-            # Start agent & add GitHub deploy key
-            eval "$(ssh-agent -s)"
-            ssh-add ~/.ssh/id_ed25519_artoflynn
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn -o StrictHostKeyChecking=no"
 
             # Create target folder if missing
             mkdir -p ~/artoflynn.codewithsky.co.ke

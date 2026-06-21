@@ -250,7 +250,7 @@ export function NotificationPanelProvider({ children }: { children: React.ReactN
     };
 
     const handleMarkNotificationRead = (id: string) => {
-        router.patch(`/admin/notifications/${id}/read`, {}, {
+        router.post(`/admin/notifications/${id}/read`, {}, {
             preserveState: true,
             preserveScroll: true,
         });
@@ -264,7 +264,7 @@ export function NotificationPanelProvider({ children }: { children: React.ReactN
     };
 
     const handleMarkMailRead = (id: number) => {
-        router.patch(`/admin/messages/${id}/read`, {}, {
+        router.post(`/admin/messages/${id}/read`, {}, {
             preserveState: true,
             preserveScroll: true,
         });

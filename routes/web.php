@@ -87,7 +87,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     // messages
     Route::get('messages', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('messages/{submission}', [MessagesController::class, 'show'])->name('messages.show');
-    Route::patch('messages/{submission}/read', [MessagesController::class, 'markRead'])->name('messages.read');
+    Route::post('messages/{submission}/read', [MessagesController::class, 'markRead'])->name('messages.read');
 });
 
 require __DIR__.'/site.php';

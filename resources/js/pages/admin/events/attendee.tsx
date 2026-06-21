@@ -59,7 +59,7 @@ export default function EventsAttendee({ event, attendees }: Props) {
     };
 
     const handleCheckIn = (ticketId: string) => {
-        router.patch(`/admin/check-in/${ticketId}`, {}, {
+        router.post(`/admin/check-in/${ticketId}`, {}, {
             onSuccess: () => {
                 toast.success('Check-in successful!');
             },

@@ -78,7 +78,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     
     // Scan & Check-in
     Route::get('check-in/{ticket_id}', [EventAttendeeController::class, 'show'])->name('checkin.show');
-    Route::patch('check-in/{ticket_id}', [EventAttendeeController::class, 'checkIn'])->name('checkin.patch');
+    Route::post('check-in/{ticket_id}', [EventAttendeeController::class, 'checkIn'])->name('checkin.post');
 
     // Contact Reply (admin reply to contact submission)
     Route::post('contacts/{submission}/reply', [ContactReplyController::class, 'store'])

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Reveal } from './components/Reveal';
+import { Reveal } from '../components/Reveal';
 
 interface ContactData {
     email_1?: string; email_2?: string; email_3?: string;

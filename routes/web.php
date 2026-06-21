@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Admin\ContactReplyController;
+use App\Http\Controllers\Admin\EventAttendeeController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\ProductController;
@@ -10,9 +11,22 @@ use App\Http\Controllers\ContactSubmissionController;
 use App\Http\Controllers\NewsSubscriptionController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\EventsController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+// Public routes
+Route::get('/events', [EventsController::class, 'index'])->name('events.public');
+Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.publicshow');
+
+Route::get('/news', [NewsController::class, 'index'])->name('news.public');
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.publicshow');
+
+Route::get('/products', [ProductsController::class, 'index'])->name('products.public');
+Route::get('/products/{slug}', [ProductsController::class, 'show'])->name('products.publicshow');
 
 // Contact form submission
 Route::post('/contact', [ContactSubmissionController::class, 'store'])
@@ -55,6 +69,16 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     // Events (full resource)
     Route::resource('events', EventController::class);
+
+    // Attendees
+    Route::get('events/{event}/attendees', [EventAttendeeController::class, 'index'])->name('events.attendees');
+    Route::post('events/{event}/attendees', [EventAttendeeController::class, 'store'])->name('events.attendees.store');
+    Route::put('attendees/{attendee}', [EventAttendeeController::class, 'update'])->name('attendees.update');
+    Route::delete('attendees/{attendee}', [EventAttendeeController::class, 'destroy'])->name('attendees.destroy');
+    
+    // Scan & Check-in
+    Route::get('check-in/{ticket_id}', [EventAttendeeController::class, 'show'])->name('checkin.show');
+    Route::patch('check-in/{ticket_id}', [EventAttendeeController::class, 'checkIn'])->name('checkin.patch');
 
     // Contact Reply (admin reply to contact submission)
     Route::post('contacts/{submission}/reply', [ContactReplyController::class, 'store'])

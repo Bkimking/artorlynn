@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Reveal } from './components/Reveal';
+import { Reveal } from '../components/Reveal';
 import { stripHtml } from '@/lib/stripHtml';
 
 const fadeUp = {
@@ -40,7 +40,7 @@ export default function ServicesLayout({ services = [] }: { services?: Array<{ i
                                 {service.image && (
                                     <img src={`/storage/${service.image}`} alt={service.title} className="w-full h-full object-cover" />
                                 )}
-                                
+
                             </div>
 
                             <div className="flex items-center gap-3 mb-3">

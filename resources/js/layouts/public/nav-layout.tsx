@@ -84,8 +84,8 @@ export default function NavLayout({
 
     const links = [
         { href: '#services', label: 'Services' },
-        { href: '#events',   label: 'Events'   },
-        { href: '#about',    label: 'About'     },
+        { href: '/events',   label: 'Events'   },
+        { href: '/products',    label: 'Products'     },
         { href: '#contact',  label: 'Contact'   },
     ];
 

@@ -24,6 +24,7 @@ class NewsRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:news,slug',
             'content' => 'required|string',
             'category' => 'nullable|string|max:100',
             'is_featured' => 'boolean',

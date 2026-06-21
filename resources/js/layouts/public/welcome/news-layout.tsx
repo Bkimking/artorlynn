@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Reveal } from './components/Reveal';
+import { Reveal } from '../components/Reveal';
 import { stripHtml } from '@/lib/stripHtml';
 
 interface NewsItem {
@@ -98,9 +98,8 @@ export default function NewsLayout({ featuredNews = [], latestNews = [] }: { fea
                                     <button
                                         key={idx}
                                         onClick={() => setFeaturedIndex(idx)}
-                                        className={`w-2 h-2 rounded-full transition-all ${
-                                            idx === featuredIndex ? 'bg-[#c9a07a] w-4' : 'bg-[#281b10]/30'
-                                        }`}
+                                        className={`w-2 h-2 rounded-full transition-all ${idx === featuredIndex ? 'bg-[#c9a07a] w-4' : 'bg-[#281b10]/30'
+                                            }`}
                                     />
                                 ))}
                             </div>

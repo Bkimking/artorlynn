@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Reveal } from './components/Reveal';
+import { Reveal } from '../components/Reveal';
 import { stripHtml } from '@/lib/stripHtml';
 
 interface Testimonial {
@@ -46,11 +46,11 @@ export default function TestimonialLayout({ testimonials = [] }: { testimonials?
 
             const { default: axios } = await import('axios');
             const res = await axios.post('/testimonials', formData);
-            
+
             setMessage(res.data.message || 'Review submitted successfully!');
             setForm({ name: '', email: '', position: '', rating: 5, content: '' });
             setAvatarFile(null);
-            
+
             setTimeout(() => {
                 setIsModalOpen(false);
                 setMessage('');
@@ -151,23 +151,23 @@ export default function TestimonialLayout({ testimonials = [] }: { testimonials?
                                     </div>
                                 )}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <input disabled={loading} required type="text" placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30" />
-                                    
-                                    <input disabled={loading} required type="email" placeholder="Your Email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30" />
+                                    <input disabled={loading} required type="text" placeholder="Your Name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30" />
+
+                                    <input disabled={loading} required type="email" placeholder="Your Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30" />
                                 </div>
-                                
+
                                 <div className="grid grid-cols-1 gap-4">
-                                    <input disabled={loading} type="text" placeholder="Your Role (optional)" value={form.position} onChange={e => setForm({...form, position: e.target.value})} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30" />
-                                    
+                                    <input disabled={loading} type="text" placeholder="Your Role (optional)" value={form.position} onChange={e => setForm({ ...form, position: e.target.value })} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30" />
+
                                     <div>
                                         <label className="text-[#f7f7f7]/60 font-serif text-xs px-1 block mb-2">Rating</label>
                                         <div className="flex gap-2">
-                                            {[1,2,3,4,5].map(r => (
+                                            {[1, 2, 3, 4, 5].map(r => (
                                                 <button
                                                     key={r}
                                                     type="button"
                                                     disabled={loading}
-                                                    onClick={() => setForm({...form, rating: r})}
+                                                    onClick={() => setForm({ ...form, rating: r })}
                                                     className={`text-2xl ${r <= form.rating ? 'text-[#c9a07a]' : 'text-[#f7f7f7]/20'} hover:scale-110 transition-transform`}
                                                 >
                                                     ★
@@ -176,7 +176,7 @@ export default function TestimonialLayout({ testimonials = [] }: { testimonials?
                                         </div>
                                     </div>
 
-                                    <textarea disabled={loading} rows={4} placeholder="Your testimonial... (optional)" value={form.content} onChange={e => setForm({...form, content: e.target.value})} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30 resize-none"></textarea>
+                                    <textarea disabled={loading} rows={4} placeholder="Your testimonial... (optional)" value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} className="w-full px-4 py-3 bg-[#f7f7f7]/5 border border-[#e8cbb5]/15 text-[#f7f7f7] font-serif text-sm rounded-lg outline-none focus:border-[#e8cbb5]/50 placeholder-[#f7f7f7]/30 resize-none"></textarea>
 
                                     <div>
                                         <label className="text-[#f7f7f7]/60 font-serif text-xs px-1 block mb-2">Avatar (optional)</label>

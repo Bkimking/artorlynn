@@ -15,4 +15,9 @@ class Event extends Model
         'event_date' => 'datetime',
         'images' => 'array',
     ];
+
+    public function attendees(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(EventAttendee::class);
+    }
 }

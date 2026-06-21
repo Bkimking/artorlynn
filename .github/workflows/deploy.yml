@@ -66,6 +66,9 @@ jobs:
             # Install dependencies
             composer install --no-dev --optimize-autoloader
 
+            # Queue worker
+            php artisan queue:restart
+
             # Laravel deployment
             php artisan migrate --force
             php artisan optimize:clear

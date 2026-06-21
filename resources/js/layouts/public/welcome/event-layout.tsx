@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { Reveal } from './components/Reveal';
+import { Reveal } from '../components/Reveal';
 import { format } from 'date-fns';
 import { stripHtml } from '@/lib/stripHtml';
+import { Link } from '@inertiajs/react';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 32 },
@@ -14,7 +15,7 @@ const stagger = {
 
 export default function EventLayout({ events = [] }: {
     events?: Array<{
-        id: number; title: string; description: string; event_date: string; location_name: string; status: string;
+        id: number; slug: string; title: string; description: string; event_date: string; location_name: string; status: string;
         images?: string[];
     }>
 }) {
@@ -41,11 +42,13 @@ export default function EventLayout({ events = [] }: {
                     viewport={{ once: true, margin: '-80px' }}
                 >
                     {events.map((event, i) => (
+                        
                         <motion.article
                             key={event.id}
                             variants={fadeUp}
-                            className="relative overflow-hidden rounded-2xl cursor-pointer group aspect-[3/4] sm:aspect-[4/5]"
+                            className="relative overflow-hidden rounded-2xl  group aspect-[3/4] sm:aspect-[4/5]"
                         >
+                            <Link href={`/events/${event.slug}`} className="block w-full h-full">
                             {event.images?.[0] ? (
                                 <img
                                     src={event.images[0]}
@@ -82,6 +85,7 @@ export default function EventLayout({ events = [] }: {
                                     {event.status === 'upcoming' ? 'Upcoming' : event.status}
                                 </span>
                             </div>
+                            </Link>
                         </motion.article>
                     ))}
                 </motion.div>

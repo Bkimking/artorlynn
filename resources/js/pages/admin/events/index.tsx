@@ -119,6 +119,12 @@ export default function EventsIndex({ events }: Props) {
                                 </div>
                                 <div className="flex gap-2">
                                     <Link
+                                        href={`/admin/events/${selectedEvent.id}/attendees`}
+                                        className="rounded-md border border-input px-3 py-1.5 text-xs font-medium hover:bg-accent"
+                                    >
+                                        Attendee
+                                    </Link>
+                                    <Link
                                         href={`/admin/events/${selectedEvent.id}/edit`}
                                         className="rounded-md border border-input px-3 py-1.5 text-xs font-medium hover:bg-accent"
                                     >

@@ -15,3 +15,20 @@ export interface AppEvent {
     created_at: string;
     updated_at: string;
 }
+
+export interface Attendee {
+    id: number;
+    event_id: number;
+    ticket_id: string;
+    name: string;
+    email: string;
+    phone: string | null;
+    amount_paid: string | number;
+    qr_code_url: string | null;
+    checked_in: boolean;
+    checked_in_at: string | null;
+    status: 'confirmed' | 'cancelled' | 'refunded';
+    notes: string | null;
+    created_at: string;
+    event?: AppEvent;
+}

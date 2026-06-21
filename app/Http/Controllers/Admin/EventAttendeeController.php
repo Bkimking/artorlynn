@@ -73,11 +73,13 @@ class EventAttendeeController extends Controller
         $attendee = EventAttendee::where('ticket_id', $ticket_id)->firstOrFail();
 
         if ($attendee->checked_in) {
-            return response()->json([
-                'success' => false,
-                'message' => "Already checked in at {$attendee->checked_in_at->format('Y-m-d H:i:s')}",
-                'attendee' => new EventAttendeeResource($attendee),
-            ], 422);
+            $message = "Already checked in at {$attendee->checked_in_at->format('Y-m-d H:i:s')}";
+            
+            if (request()->wantsJson()) {
+                return response()->json(['success' => false, 'message' => $message], 422);
+            }
+            
+            return back()->with('error', $message);
         }
 
         $attendee->update([
@@ -85,10 +87,12 @@ class EventAttendeeController extends Controller
             'checked_in_at' => now(),
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Check-in successful!',
-            'attendee' => new EventAttendeeResource($attendee),
-        ]);
+        $message = 'Check-in successful!';
+
+        if (request()->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $message]);
+        }
+
+        return back()->with('success', $message);
     }
 }

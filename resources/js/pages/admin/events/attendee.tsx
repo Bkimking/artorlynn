@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, router } from "@inertiajs/react";
 import EventsLayout from "@/layouts/events/layout";
 import { useState, useEffect } from "react";
 import { AppEvent, Attendee } from "@/types";
@@ -58,15 +58,17 @@ export default function EventsAttendee({ event, attendees }: Props) {
         });
     };
 
-    const handleCheckIn = async (ticketId: string) => {
-        try {
-            const response = await axios.patch(`/admin/check-in/${ticketId}`);
-            toast.success(response.data.message);
-            // Refresh to show updated check-in status
-            window.location.reload();
-        } catch (error: any) {
-            toast.error(error.response?.data?.message || 'Check-in failed');
-        }
+    const handleCheckIn = (ticketId: string) => {
+        router.patch(`/admin/check-in/${ticketId}`, {}, {
+            onSuccess: () => {
+                toast.success('Check-in successful!');
+            },
+            onError: (errors) => {
+                toast.error(errors.message || 'Check-in failed');
+            },
+            preserveScroll: true,
+            preserveState: true,
+        });
     };
 
     // Improved Scanner Logic

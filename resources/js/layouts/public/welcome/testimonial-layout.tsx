@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Reveal } from '../components/Reveal';
 import { stripHtml } from '@/lib/stripHtml';
+import axios from 'axios';
 
 interface Testimonial {
     id: number;
@@ -44,7 +45,6 @@ export default function TestimonialLayout({ testimonials = [] }: { testimonials?
             if (form.content) formData.append('content', form.content);
             if (avatarFile) formData.append('avatar', avatarFile);
 
-            const { default: axios } = await import('axios');
             const res = await axios.post('/testimonials', formData);
 
             setMessage(res.data.message || 'Review submitted successfully!');

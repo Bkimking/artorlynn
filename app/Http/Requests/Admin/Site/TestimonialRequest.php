@@ -24,6 +24,7 @@ class TestimonialRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
             'position' => 'nullable|string|max:255',
             'content' => 'required|string',
             'rating' => 'required|integer|min:1|max:5',

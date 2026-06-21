@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Reveal } from '../components/Reveal';
+import axios from 'axios';
 
 interface ContactData {
     email_1?: string; email_2?: string; email_3?: string;
@@ -57,7 +58,6 @@ export default function ContactLayout({
         setLoading(true);
         setErrorMsg('');
         try {
-            const { default: axios } = await import('axios');
             await axios.post('/contact', form);
             setSent(true);
             setForm({ name: '', email: '', service: '', message: '' });

@@ -54,6 +54,14 @@ class NewsSubscriptionController extends Controller
                     'action'=> 'reactivated',
                 ]);
             }
+
+            // Notify guest (welcome email)
+            NotificationService::send(NotificationType::NEWS_WELCOME, [
+                'email' => $existing->email,
+                'name'  => $existing->name,
+            ], [
+                'name' => $existing->name,
+            ]);
  
             return response()->json([
                 'message' => 'Welcome back! You\'ve been re-subscribed.',
@@ -80,6 +88,14 @@ class NewsSubscriptionController extends Controller
                 'action'=> 'new',
             ]);
         }
+
+        // Notify guest (welcome email)
+        NotificationService::send(NotificationType::NEWS_WELCOME, [
+            'email' => $subscription->email,
+            'name'  => $subscription->name,
+        ], [
+            'name' => $subscription->name,
+        ]);
  
         return response()->json([
             'message' => 'You\'re in! Thanks for subscribing.',

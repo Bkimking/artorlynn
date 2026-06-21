@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 interface ContactData {
     email_1?: string;
@@ -60,7 +61,6 @@ export default function FooterLayout({
         setLoading(true);
         setMessage('');
         try {
-            const { default: axios } = await import('axios');
             const res = await axios.post('/newsletter/subscribe', { email });
             setDone(true);
             setMessage(res.data.message || 'Subscribed successfully!');

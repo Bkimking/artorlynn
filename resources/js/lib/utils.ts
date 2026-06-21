@@ -19,9 +19,12 @@ export function formatCurrency(amount: number | string) {
     }).format(value);
 }
 
-export function formatDate(date: string | Date) {
+export function formatDate(date: string | Date | null | undefined) {
+    if (!date) return '—';
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return '—';
     return new Intl.DateTimeFormat('en-US', {
         dateStyle: 'medium',
         timeStyle: 'short',
-    }).format(new Date(date));
+    }).format(d);
 }

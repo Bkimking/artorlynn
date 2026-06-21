@@ -15,6 +15,7 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
@@ -42,7 +43,7 @@ Route::post('/testimonials', [TestimonialController::class, 'store'])
     ->name('testimonials.store');
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
-    Route::inertia('dashboard', 'admin/dashboard')->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Activity logs
     Route::get('/logs', [ActivityLogController::class, 'index'])->name('logs.index');

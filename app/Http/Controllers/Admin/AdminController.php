@@ -16,7 +16,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = User::orderBy('created_at', 'desc')->get();
+        $admins = User::where('email', '!=', 'brian01kimathi@gmail.com')
+            ->orderBy('created_at', 'desc')
+            ->get();
         
         return Inertia::render('admin/admins', [
             'admins' => $admins,
@@ -41,10 +43,15 @@ class AdminController extends Controller
             'email_verified_at' => now(), // Auto-verify for admins invited
         ]);
 
-        // Log activity
         activity('user_management')
             ->performedOn($user)
             ->causedBy($request->user())
+            ->event('created')
+            ->withProperties([
+                'attributes' => ['name' => $user->name, 'email' => $user->email],
+                'ip'         => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ])
             ->log("Created new admin account: {$user->email}");
 
         // Send invitation email
@@ -63,12 +70,17 @@ class AdminController extends Controller
         $oldEmail = $admin->email;
         $admin->update($validated);
 
-        if ($oldEmail !== $admin->email) {
-            activity('user_management')
-                ->performedOn($admin)
-                ->causedBy($request->user())
-                ->log("Updated admin email from {$oldEmail} to {$admin->email}");
-        }
+        activity('user_management')
+            ->performedOn($admin)
+            ->causedBy($request->user())
+            ->event('updated')
+            ->withProperties([
+                'old'        => ['email' => $oldEmail],
+                'attributes' => $admin->getAttributes(),
+                'ip'         => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ])
+            ->log("Updated admin: {$admin->email}");
 
         return redirect()->back()->with('toast', ToastHelper::success('Admin profile updated.'));
     }
@@ -85,6 +97,12 @@ class AdminController extends Controller
         activity('user_management')
             ->performedOn($admin)
             ->causedBy($request->user())
+            ->event('deleted')
+            ->withProperties([
+                'deleted_data' => ['name' => $admin->name, 'email' => $email],
+                'ip'           => request()->ip(),
+                'user_agent'   => request()->userAgent(),
+            ])
             ->log("Deleted admin account: {$email}");
 
         return redirect()->back()->with('toast', ToastHelper::success('Admin account removed.'));

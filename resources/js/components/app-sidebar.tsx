@@ -74,11 +74,6 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Project Brain',
-        href: '/_laravel-brain',
-        icon: Brain,
-    },
-    {
         title: 'Support',
         href: '#',
         icon: MessageCircleMore,

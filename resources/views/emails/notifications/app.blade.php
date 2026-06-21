@@ -57,7 +57,7 @@
                 <div class="meta">
                     <p><strong>From:</strong> {{ $data['name'] ?? '—' }}</p>
                     <p><strong>Rating:</strong> {{ $data['rating'] ?? '—' }} / 5</p>
-                    @isset($data['content'])<p><strong>Review:</strong> {{ $data['content'] }}</p>@endisset
+                    @isset($data['content'])<p><strong>Review:</strong> {{ strip_tags($data['content']) }}</p>@endisset
                 </div>
                 <p>Visit your admin panel to approve or feature this review.</p>
             @break

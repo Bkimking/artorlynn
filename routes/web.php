@@ -14,6 +14,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
@@ -88,6 +89,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('messages', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('messages/{submission}', [MessagesController::class, 'show'])->name('messages.show');
     Route::post('messages/{submission}/read', [MessagesController::class, 'markRead'])->name('messages.read');
+
+    // admins
+    Route::resource('admins', AdminController::class);
 });
 
 require __DIR__.'/site.php';

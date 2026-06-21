@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Bell, LayoutGrid, Logs, Calendar, Brain, Box, Building2, MessageCircleMore, Mail } from 'lucide-react';
+import { Bell, LayoutGrid, Logs, Calendar, Brain, Box, Building2, MessageCircleMore, Mail, User } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -22,6 +22,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Admins',
+        href: '/admin/admins',
+        icon: User,
     },
     {
         title: 'Products',

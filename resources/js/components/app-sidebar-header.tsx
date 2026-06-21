@@ -67,7 +67,7 @@ export function AppSidebarHeader({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>                        
                         <DropdownMenuItem>
-                            <Link href="#">Create Admin</Link>
+                            <Link href="#">Admin</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Link href="/admin/products/create">Create Product</Link>

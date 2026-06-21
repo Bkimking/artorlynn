@@ -86,7 +86,7 @@ export default function Messages({ submissions, selected: serverSelected }: Prop
     // If the auto-selected submission on mount is unread, mark it read immediately
     useEffect(() => {
         if (selected && selected.status === 'unread' && !serverSelected) {
-            router.patch(messagesRoutes.read(selected.id).url, {}, {
+            router.post(messagesRoutes.read(selected.id).url, {}, {
                 preserveState: true,
                 preserveScroll: true,
             });
@@ -96,7 +96,7 @@ export default function Messages({ submissions, selected: serverSelected }: Prop
     function selectSubmission(submission: Submission) {
         setSelected(submission);
         if (submission.status === 'unread') {
-            router.patch(messagesRoutes.read(submission.id).url, {}, {
+            router.post(messagesRoutes.read(submission.id).url, {}, {
                 preserveState: true,
                 preserveScroll: true,
             });

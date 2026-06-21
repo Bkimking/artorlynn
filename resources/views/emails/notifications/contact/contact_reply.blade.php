@@ -6,7 +6,7 @@
     <p>You have a new reply regarding your inquiry:</p>
 
     <div class="meta">
-        <span class="meta-item">{{ $data['reply_body'] ?? '' }}</span>
+        <span class="meta-item">{{ strip_tags($data['reply_body'] ?? '') }}</span>
     </div>
 
     <p>You can reply directly to this email to continue the conversation.</p>

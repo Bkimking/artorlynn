@@ -8,7 +8,7 @@
         <span class="meta-item"><strong>Name:</strong> {{ $data['name'] ?? '—' }}</span>
         <span class="meta-item"><strong>Rating:</strong> {{ $data['rating'] ?? '—' }} / 5</span>
         @isset($data['content'])
-            <p style="margin-top: 15px; font-style: italic; color: #555;">"{{ $data['content'] }}"</p>
+            <p style="margin-top: 15px; font-style: italic; color: #555;">"{{ strip_tags($data['content']) }}"</p>
         @endisset
     </div>
 

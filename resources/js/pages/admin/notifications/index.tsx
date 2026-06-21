@@ -43,7 +43,7 @@ const breadcrumbs = [
 
 export default function Notifications({ notifications: notifPage }: { notifications: { data: Notification[], links: any } }) {
     const markAsRead = (id: string) => {
-        router.patch(notifications.read(id).url, {}, { preserveScroll: true });
+        router.post(notifications.read(id).url, {}, { preserveScroll: true });
     };
 
     const markAllAsRead = () => {

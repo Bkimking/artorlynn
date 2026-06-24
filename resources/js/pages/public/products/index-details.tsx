@@ -1,13 +1,21 @@
 import { Head, Link } from '@inertiajs/react';
 import ProductDetailsLayout from '@/layouts/public/product-details-layout';
 import { stripHtml } from '@/lib/stripHtml';
+import { useState } from 'react';
 
 export default function ProductShow({ product }: { product: any }) {
     const mainImage = product.images?.[0] || null;
     const hasDiscount = product.compare_at_price && product.compare_at_price > product.price;
+    const [prefillService, setPrefillService] = useState<string | undefined>(undefined);
+
+    const handleEnquire = () => {
+        const service = product.product_category?.name || product.title;
+        setPrefillService(service);
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     return (
-        <ProductDetailsLayout>
+        <ProductDetailsLayout prefillService={prefillService}>
             <Head title={`${product.title} — Art of Lynn`} />
             <article className="bg-[#f7f7f7] py-12 sm:py-20">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,12 +70,12 @@ export default function ProductShow({ product }: { product: any }) {
                                 </p>
                             )}
                             <div className="mt-8">
-                                <a
-                                    href="#contact"
-                                    className="inline-block px-8 py-4 bg-[#281b10] text-[#f7f7f7] font-serif text-sm uppercase tracking-widest rounded-sm hover:bg-[#c9a07a] transition-colors"
+                                <button
+                                    onClick={handleEnquire}
+                                    className="inline-block px-8 py-4 bg-[#281b10] text-[#f7f7f7] font-serif text-sm uppercase tracking-widest rounded-sm hover:bg-[#c9a07a] transition-colors cursor-pointer"
                                 >
                                     Enquire about this piece
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>

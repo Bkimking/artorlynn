@@ -83,7 +83,7 @@ export default function NavLayout({
     }, [banners.length, headerTop]);
 
     const links = [
-        { href: '#services', label: 'Services' },
+        { href: '/#services', label: 'Services' },
         { href: '/events',   label: 'Events'   },
         { href: '/products',    label: 'Products'     },
         { href: '#contact',  label: 'Contact'   },

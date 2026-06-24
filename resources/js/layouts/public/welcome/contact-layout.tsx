@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Reveal } from '../components/Reveal';
+import { Reveal } from '../components/reveal';
 import axios from 'axios';
 
 interface ContactData {
@@ -31,36 +31,49 @@ function buildSocialUrl(baseUrl: string, handle: string): string {
     return `${baseUrl}${cleaned}`;
 }
 
-// Default art services shown when none come from DB
-const DEFAULT_SERVICES = [
-    'Custom Illustration',
-    'Portrait Drawing',
-    'Coloring Book Art',
-    'Character Design',
-    'Fine Art Print',
-    'Commission Piece',
-];
-
 export default function ContactLayout({
     contact,
     services = [],
+    prefillService,
 }: {
     contact?: ContactData;
     services?: Array<{ id: number; title: string }>;
+    prefillService?: string;
 }) {
     const [sent, setSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [form, setForm] = useState({ name: '', email: '', service: '', message: '' });
+    const [customService, setCustomService] = useState('');
+    const [isCustom, setIsCustom] = useState(false);
+
+    // Prefill the service field when prefillService changes
+    useEffect(() => {
+        if (!prefillService) return;
+        const serviceTitles = services.map(s => s.title);
+        if (serviceTitles.includes(prefillService)) {
+            setForm(prev => ({ ...prev, service: prefillService }));
+            setIsCustom(false);
+        } else {
+            // Not in the list → use "Other" + custom input
+            setIsCustom(true);
+            setCustomService(prefillService);
+            setForm(prev => ({ ...prev, service: 'Other' }));
+        }
+    }, [prefillService, services]);
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setErrorMsg('');
+        // Determine the final service value
+        const serviceValue = isCustom ? customService : form.service;
         try {
-            await axios.post('/contact', form);
+            await axios.post('/contact', { ...form, service: serviceValue });
             setSent(true);
             setForm({ name: '', email: '', service: '', message: '' });
+            setCustomService('');
+            setIsCustom(false);
             setTimeout(() => setSent(false), 5000);
         } catch (err: any) {
             if (err.response?.data?.message) {
@@ -83,7 +96,7 @@ export default function ContactLayout({
     const location = [contact?.city, contact?.county, contact?.country].filter(Boolean).join(', ') || null;
     const hours = 'Mon–Sat · 9am–6pm EAT';
 
-    const serviceOptions = services.length ? services.map(s => s.title) : DEFAULT_SERVICES;
+    const serviceOptions = services.map(s => s.title);
 
     const socials = SOCIAL_DEFS
         .map(s => ({ ...s, url: contact?.[s.key as keyof ContactData] as string | undefined }))
@@ -158,13 +171,37 @@ export default function ContactLayout({
                             <input disabled={loading} className={inputClass} placeholder="Your Name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
                             <input disabled={loading} className={inputClass} type="email" placeholder="Email Address" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
                         </div>
-                        <select disabled={loading} className={`${inputClass} appearance-none`} value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}>
-                            <option value="" className="bg-[#281b10]">Select a Service</option>
-                            {serviceOptions.map((name, i) => (
-                                <option key={i} className="bg-[#281b10]">{name}</option>
-                            ))}
-                            <option className="bg-[#281b10]">Other</option>
-                        </select>
+
+                        <div>
+                            <select
+                                disabled={loading}
+                                className={`${inputClass} appearance-none`}
+                                value={form.service}
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setForm({ ...form, service: val });
+                                    setIsCustom(val === 'Other');
+                                    if (val !== 'Other') setCustomService('');
+                                }}
+                            >
+                                <option value="" className="bg-[#281b10]">Select a Service</option>
+                                {serviceOptions.map((name, i) => (
+                                    <option key={i} className="bg-[#281b10]">{name}</option>
+                                ))}
+                                <option value="Other" className="bg-[#281b10]">Other (specify)</option>
+                            </select>
+                            {isCustom && (
+                                <input
+                                    disabled={loading}
+                                    className={`${inputClass} mt-2`}
+                                    placeholder="Please specify your service"
+                                    value={customService}
+                                    onChange={e => setCustomService(e.target.value)}
+                                    required
+                                />
+                            )}
+                        </div>
+
                         <textarea disabled={loading} className={`${inputClass} resize-none`} rows={5} placeholder="Tell us about your project..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
                         <motion.button
                             disabled={loading || sent}

@@ -1,0 +1,1 @@
+import{i as e,n as t,t as n}from"./jsx-runtime-DIYg1QW5.js";import{t as r}from"./news-details-layout-C2qO58OR.js";var i=t(),a=n();function o(){let t=(0,i.c)(1),n;return t[0]===Symbol.for(`react.memo_cache_sentinel`)?(n=(0,a.jsxs)(a.Fragment,{children:[(0,a.jsx)(e,{title:`News — Art of Lynn`}),(0,a.jsx)(r,{})]}),t[0]=n):n=t[0],n}export{o as default};

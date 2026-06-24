@@ -13,9 +13,11 @@ interface PageProps extends InertiaPageProps {
 export default function ProductDetailsLayout({
     children,
     prefillService,
+    prefillMessage,
 }: {
     children: React.ReactNode;
     prefillService?: string;
+    prefillMessage?: string;
 }) {
     const { auth, banners, contact, services } = usePage<PageProps>().props;
 
@@ -25,7 +27,12 @@ export default function ProductDetailsLayout({
             <main className="pt-16 sm:pt-20 min-h-screen">
                 {children}
             </main>
-            <ContactLayout contact={contact} services={services} prefillService={prefillService} />
+            <ContactLayout
+                contact={contact}
+                services={services}
+                prefillService={prefillService}
+                prefillMessage={prefillMessage}
+            />
             <FooterLayout contact={contact} services={services} />
             <style>{`
                 html { scroll-behavior: smooth; }

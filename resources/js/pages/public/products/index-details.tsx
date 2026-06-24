@@ -7,15 +7,17 @@ export default function ProductShow({ product }: { product: any }) {
     const mainImage = product.images?.[0] || null;
     const hasDiscount = product.compare_at_price && product.compare_at_price > product.price;
     const [prefillService, setPrefillService] = useState<string | undefined>(undefined);
+    const [prefillMessage, setPrefillMessage] = useState<string | undefined>(undefined);
 
     const handleEnquire = () => {
         const service = product.product_category?.name || product.title;
         setPrefillService(service);
+        setPrefillMessage(`I am interested in "${product.title}"`);
         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
-        <ProductDetailsLayout prefillService={prefillService}>
+        <ProductDetailsLayout prefillService={prefillService} prefillMessage={prefillMessage}>
             <Head title={`${product.title} — Art of Lynn`} />
             <article className="bg-[#f7f7f7] py-12 sm:py-20">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

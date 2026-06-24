@@ -35,10 +35,12 @@ export default function ContactLayout({
     contact,
     services = [],
     prefillService,
+    prefillMessage,
 }: {
     contact?: ContactData;
     services?: Array<{ id: number; title: string }>;
     prefillService?: string;
+    prefillMessage?: string;
 }) {
     const [sent, setSent] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -47,26 +49,31 @@ export default function ContactLayout({
     const [customService, setCustomService] = useState('');
     const [isCustom, setIsCustom] = useState(false);
 
-    // Prefill the service field when prefillService changes
+    // Prefill service and message when they change
     useEffect(() => {
-        if (!prefillService) return;
-        const serviceTitles = services.map(s => s.title);
-        if (serviceTitles.includes(prefillService)) {
-            setForm(prev => ({ ...prev, service: prefillService }));
-            setIsCustom(false);
-        } else {
-            // Not in the list → use "Other" + custom input
-            setIsCustom(true);
-            setCustomService(prefillService);
-            setForm(prev => ({ ...prev, service: 'Other' }));
+        if (prefillService) {
+            const serviceTitles = services.map(s => s.title);
+            if (serviceTitles.includes(prefillService)) {
+                setForm(prev => ({ ...prev, service: prefillService }));
+                setIsCustom(false);
+            } else {
+                setIsCustom(true);
+                setCustomService(prefillService);
+                setForm(prev => ({ ...prev, service: 'Other' }));
+            }
         }
     }, [prefillService, services]);
+
+    useEffect(() => {
+        if (prefillMessage) {
+            setForm(prev => ({ ...prev, message: prefillMessage }));
+        }
+    }, [prefillMessage]);
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setErrorMsg('');
-        // Determine the final service value
         const serviceValue = isCustom ? customService : form.service;
         try {
             await axios.post('/contact', { ...form, service: serviceValue });
@@ -202,7 +209,15 @@ export default function ContactLayout({
                             )}
                         </div>
 
-                        <textarea disabled={loading} className={`${inputClass} resize-none`} rows={5} placeholder="Tell us about your project..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
+                        <textarea
+                            disabled={loading}
+                            className={`${inputClass} resize-none`}
+                            rows={5}
+                            placeholder="Tell us about your project..."
+                            value={form.message}
+                            onChange={e => setForm({ ...form, message: e.target.value })}
+                            required
+                        />
                         <motion.button
                             disabled={loading || sent}
                             type="submit"

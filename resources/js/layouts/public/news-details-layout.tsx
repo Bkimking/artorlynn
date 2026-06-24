@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/react';
 import type { PageProps as InertiaPageProps } from '@inertiajs/core';
 import NavLayout from '@/layouts/public/nav-layout';
 import FooterLayout from '@/layouts/public/footer-layout';
+import ContactLayout from '@/layouts/public/welcome/contact-layout';
 import { Link } from '@inertiajs/react';
 import { stripHtml } from '@/lib/stripHtml';
 
@@ -58,7 +59,15 @@ export default function NewsIndexLayout({ children }: { children?: React.ReactNo
                     </section>
                 )}
             </main>
+            <ContactLayout contact={contact} services={services} />
             <FooterLayout contact={contact} services={services} />
+            <style>{`
+                html { scroll-behavior: smooth; }
+                ::selection { background: rgba(232,203,181,0.3); color: #281b10; }
+                ::-webkit-scrollbar { width: 5px; }
+                ::-webkit-scrollbar-track { background: #0d0805; }
+                ::-webkit-scrollbar-thumb { background: rgba(232,203,181,0.25); border-radius: 3px; }
+            `}</style>
         </div>
     );
 }

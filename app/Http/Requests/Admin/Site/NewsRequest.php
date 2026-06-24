@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Site;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NewsRequest extends FormRequest
 {
@@ -22,9 +23,16 @@ class NewsRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
+
         return [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:news,slug',
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('news', 'slug')->ignore($id),
+            ],
             'content' => 'required|string',
             'category' => 'nullable|string|max:100',
             'is_featured' => 'boolean',

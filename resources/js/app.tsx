@@ -13,7 +13,6 @@ createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
 
-        console.log('🔥 Inertia page name:', name);
         switch (true) {
             case name === 'welcome':
             case name.startsWith('public/'):

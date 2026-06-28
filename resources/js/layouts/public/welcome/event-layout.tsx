@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Reveal } from '../components/Reveal';
+import { Reveal } from '../components/reveal';
 import { format } from 'date-fns';
 import { stripHtml } from '@/lib/stripHtml';
 import { Link } from '@inertiajs/react';

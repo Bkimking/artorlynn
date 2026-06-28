@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Reveal } from '../components/Reveal';
+import { Reveal } from '../components/reveal';
 import { stripHtml } from '@/lib/stripHtml';
 
 interface NewsItem {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Reveal } from '../components/Reveal';
+import { Reveal } from '../components/reveal';
 import { stripHtml } from '@/lib/stripHtml';
 
 export default function FaqsLayout({ faqs = [] }: { faqs?: Array<{ id: number; question: string; answer: string }> }) {

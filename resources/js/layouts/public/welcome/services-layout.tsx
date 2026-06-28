@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Reveal } from '../components/Reveal';
+import { Reveal } from '../components/reveal';
 import { stripHtml } from '@/lib/stripHtml';
 
 const fadeUp = {

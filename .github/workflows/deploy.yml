@@ -10,70 +10,55 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      # 2. Load SSH key
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5.7"
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build assets
+        run: npm run build
+
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    
-      # 3 Debug secrets
-      - name: Debug secrets presence
-        run: |
-          echo "HOST set: ${{ secrets.SSH_HOST != '' }}"
-          echo "PORT set: ${{ secrets.SSH_PORT != '' }}"
 
-      # 4. Add server fingerprint
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p ${{ secrets.SSH_PORT || '22' }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      # # 5. Test SSH connection
-      # - name: SSH Test
-      #   run: |
-      #     ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} exit
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.env' \
+            --exclude='storage/logs' \
+            --exclude='node_modules' \
+            --exclude='storage/framework/sessions' \
+            -e "ssh -p ${{ secrets.SSH_PORT }}" \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/artoflynn.codewithsky.co.ke/
 
-      # 6. Deployment commands
-      - name: Deploy artoflynn.codewithsky.co.ke
+      - name: Run Laravel commands
         run: |
           ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            set -e
-
-            # Start agent & add GitHub deploy key
-            eval "$(ssh-agent -s)"
-            ssh-add ~/.ssh/id_ed25519_artoflynn
-
-            # Create target folder if missing
-            mkdir -p ~/artoflynn.codewithsky.co.ke
             cd ~/artoflynn.codewithsky.co.ke
-
-            # Git setup
-            if [ ! -d ".git" ]; then
-                GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git init
-                git remote add origin git@github.com:Bkimking/artorlynn.git
-                GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git fetch origin
-                git checkout -f main
-            else
-                GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_artoflynn" git fetch origin
-                git reset --hard origin/main
-            fi
-
-            # Install dependencies
-            composer install --no-dev --optimize-autoloader
-
-            # Queue worker
             php artisan queue:restart
-
-            # Laravel deployment
             php artisan migrate --force
             php artisan optimize:clear
             php artisan optimize
-
-            echo "Deployment complete"
           EOF
-          

@@ -39,7 +39,7 @@ jobs:
       #     ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} exit
 
       # 6. Deployment commands
-      - name: Deploy codewithsky
+      - name: Deploy artoflynn.codewithsky.co.ke
         run: |
           ssh -T -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e

@@ -98,7 +98,9 @@ export default function Gallerys() {
     };
 
     const deleteItem = (id: number) => {
-        router.delete(site.gallerys.destroy({ id }).url, {
+        router.post(site.gallerys.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["items"] }),
         });

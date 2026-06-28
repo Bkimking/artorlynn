@@ -121,7 +121,9 @@ export default function Partners() {
     };
 
     const deletePartner = (id: number) => {
-        router.delete(site.partners.destroy({ id }).url, {
+        router.post(site.partners.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["partners"] }),
         });

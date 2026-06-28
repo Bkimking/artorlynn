@@ -48,7 +48,10 @@ export default function Faqs() {
         if (!selectedFaq) return;
         setSaving(true);
         // Send the whole selectedFaq (which has a real DB ID)
-        await router.put(site.faqs.update({ id: selectedFaq.id }).url, selectedFaq, {
+        await router.post(site.faqs.update({ id: selectedFaq.id }).url, {
+            ...selectedFaq,
+            _method: "PUT",
+        }, {
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => router.reload({ only: ["faqs"] }),
@@ -69,7 +72,9 @@ export default function Faqs() {
     };
 
     const deleteFaq = (id: number) => {
-        router.delete(site.faqs.destroy({ id }).url, {
+        router.post(site.faqs.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["faqs"] }),
         });

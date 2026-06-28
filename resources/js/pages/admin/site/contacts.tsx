@@ -56,7 +56,7 @@ function Field({ label, optional, children }: { label: string; optional?: boolea
 
 export default function Contacts() {
     const { props } = usePage<{ contact: ContactsData; toast?: any }>();
-    const { data, setData, put, processing } = useForm<ContactsData>(
+    const { data, setData, transform, post, processing } = useForm<ContactsData>(
         props.contact || {
             email_1: "", email_2: "", email_3: "",
             phone_1: "", phone_2: "", phone_3: "",
@@ -76,7 +76,11 @@ export default function Contacts() {
     }, [props.contact]);
 
     const handleSubmit = () => {
-        put(site.contacts.update().url, {
+        transform((data) => ({
+            ...data,
+            _method: "PUT",
+        }));
+        post(site.contacts.update().url, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["contact"] }),
         });

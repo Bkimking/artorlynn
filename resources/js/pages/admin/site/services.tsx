@@ -174,7 +174,9 @@ export default function Services() {
     };
 
     const handleDelete = (id: number) => {
-        router.delete(site.services.destroy({ id }).url, {
+        router.post(site.services.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["services"] }),
         });

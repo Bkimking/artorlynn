@@ -67,14 +67,19 @@ export default function Banners() {
 
     const saveBanner = () => {
         if (!selectedBanner) return;
-        router.put(site.banners.update({ id: selectedBanner.id }).url, selectedBanner, {
+        router.post(site.banners.update({ id: selectedBanner.id }).url, {
+            ...selectedBanner,
+            _method: "PUT",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["banners"] }),
         });
     };
 
     const deleteBanner = (id: number) => {
-        router.delete(site.banners.destroy({ id }).url, {
+        router.post(site.banners.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["banners"] }),
         });

@@ -193,7 +193,9 @@ export default function News() {
     };
 
     const deletePost = (id: number) => {
-        router.delete(site.news.destroy({ id }).url, {
+        router.post(site.news.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["posts"] }),
         });

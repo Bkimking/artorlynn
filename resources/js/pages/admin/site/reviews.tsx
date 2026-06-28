@@ -122,7 +122,9 @@ export default function Reviews() {
     };
 
     const deleteReview = (id: number) => {
-        router.delete(site.reviews.destroy({ id }).url, {
+        router.post(site.reviews.destroy({ id }).url, {
+            _method: "DELETE",
+        }, {
             preserveScroll: true,
             onSuccess: () => router.reload({ only: ["reviews"] }),
         });

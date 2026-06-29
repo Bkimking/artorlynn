@@ -26,7 +26,7 @@ function ScrollColumn({
     active,
     onCardClick,
     colIndex,
-    globalOffset,    // offset so columns start at different positions
+    globalOffset,   
 }: {
     items: any[];
     direction: -1 | 1;

@@ -22,8 +22,7 @@ export default function EventsIndex({ events }: Props) {
 
     const handleDelete = (id: number) => {
         if (confirm('Are you sure you want to delete this event?')) {
-            // @ts-ignore
-            destroy(route('events.destroy', id), {
+            destroy(`/admin/events/${id}`, {
                 onSuccess: () => setSelectedEvent(null)
             });
         }

@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'compare_at_price' => $this->compare_at_price,
             'stock_quantity' => $this->stock_quantity,
-            'images' => $this->images,
+            'images' => $this->images? asset('storage/' . $this->images) : null,
             'status' => $this->status,
             'is_featured' => $this->is_featured,
             'product_category' => new ProductCategoryResource($this->whenLoaded('productCategory')),

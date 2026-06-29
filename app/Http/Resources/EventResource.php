@@ -25,7 +25,7 @@ class EventResource extends JsonResource
             'ticket_price' => $this->ticket_price,
             'max_capacity' => $this->max_capacity,
             'tickets_sold' => $this->tickets_sold,
-            'images' => $this->images,
+            'images' => $this->images ? asset('storage/' . $this->images) : null,
             'status' => $this->status,
             'registration_open' => $this->registration_open,
             'created_at' => $this->created_at,

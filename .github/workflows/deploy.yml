@@ -59,6 +59,7 @@ jobs:
             cd ~/artoflynn.codewithsky.co.ke
             php artisan queue:restart
             php artisan migrate --force
+            php artisan storage:link
             php artisan optimize:clear
             php artisan optimize
           EOF

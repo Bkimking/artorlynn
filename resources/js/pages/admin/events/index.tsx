@@ -172,7 +172,7 @@ export default function EventsIndex({ events }: Props) {
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         {selectedEvent.images.map((img, i) => (
                                             <div key={i} className="aspect-square rounded-lg border overflow-hidden bg-muted">
-                                                <img src={`/storage/${img}`} alt="" className="w-full h-full object-cover" />
+                                                <img src={img} alt="" className="w-full h-full object-cover" />
                                             </div>
                                         ))}
                                     </div>

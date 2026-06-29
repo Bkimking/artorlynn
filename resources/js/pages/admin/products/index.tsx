@@ -22,8 +22,7 @@ export default function ProductsIndex({ products }: Props) {
 
     const handleDelete = (id: number) => {
         if (confirm('Are you sure you want to delete this product?')) {
-            // @ts-ignore
-            destroy(route('products.destroy', id), {
+            destroy(`/admin/products/${id}`, {
                 onSuccess: () => setSelectedProduct(null)
             });
         }
@@ -163,7 +162,7 @@ export default function ProductsIndex({ products }: Props) {
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         {selectedProduct.images.map((img, i) => (
                                             <div key={i} className="aspect-square rounded-lg border-2 border-black overflow-hidden bg-muted group relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                                                <img src={`/storage/${img}`} alt="" className="w-full h-full object-cover" />
+                                                <img src={img} alt="" className="w-full h-full object-cover" />
                                             </div>
                                         ))}
                                     </div>

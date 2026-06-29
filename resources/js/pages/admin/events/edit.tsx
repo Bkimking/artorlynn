@@ -301,7 +301,7 @@ export default function EventEdit({ event }: Props) {
                                     dangerouslySetInnerHTML={{ __html: data.description || 'Fill in the description field to see the transmission here...' }}
                                 />
                             </div>
-
+{/*  */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-4">
                                 {[...data.existing_images.map(img => `/storage/${img}`), ...previews].slice(1).map((p, i) => (
                                     <div key={i} className="aspect-square rounded-lg border-2 border-black overflow-hidden">

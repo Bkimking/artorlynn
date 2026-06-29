@@ -19,8 +19,8 @@ const fadeUp  = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, trans
 // A single infinitely-scrolling column
 function ScrollColumn({
     items,
-    direction,       // -1 = scroll up, +1 = scroll down
-    baseSpeed,       // px per second at rest
+    direction,      
+    baseSpeed,      
     hovered,
     isImg,
     active,

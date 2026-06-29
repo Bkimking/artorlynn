@@ -1,3 +1,4 @@
+// 
 import { Head, Link, useForm } from "@inertiajs/react";
 import EventsLayout from "@/layouts/events/layout";
 import { useState } from "react";

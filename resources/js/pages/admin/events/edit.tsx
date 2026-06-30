@@ -207,7 +207,7 @@ export default function EventEdit({ event }: Props) {
                                 <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4">
                                     {data.existing_images.map((img, index) => (
                                         <div key={index} className="relative aspect-square rounded-lg border overflow-hidden bg-muted group">
-                                            <img src={`/storage/${img}`} alt="" className="w-full h-full object-cover" />
+                                            <img src={img} alt="" className="w-full h-full object-cover" />
                                             <button
                                                 type="button"
                                                 onClick={() => removeExistingImage(index)}
